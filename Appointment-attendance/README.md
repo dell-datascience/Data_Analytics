@@ -1305,7 +1305,7 @@ Being a senior citizen or a late adult with hypertension increases the likelihoo
 
 Alcohol Problems and Attendance:
 
-if a patient falls into the late adult or middle-aged adult category and faces alcohol-related issues, they are more likely to attend appointments. In contrast to previous results, late adults and middle-aged adults with alcohol problems show the highest attendance rates, followed by senior citizens. Surprisingly, children with alcohol problems have the lowest attendance rates. 
+If a patient falls into the late adult or middle-aged adult category and faces alcohol-related issues, they are more likely to attend appointments. In contrast to previous results, late adults and middle-aged adults with alcohol problems show the highest attendance rates, followed by senior citizens. Surprisingly, children with alcohol problems have the lowest attendance rates. 
 ![png](Investigate_a_Dataset_files/Investigate_a_Dataset_100_0.png)
 
 ***Call to Action***
