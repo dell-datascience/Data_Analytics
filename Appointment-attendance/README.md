@@ -7,7 +7,7 @@
 <li><a href="#intro">Introduction</a></li>
 <li><a href="#wrangling">Data Wrangling</a></li>
 <li><a href="#eda">Exploratory Data Analysis</a></li>
-<li><a href="#conclusions">Conclusions</a></li>
+<li><a href="#Report">Report</a></li>
 </ul>
 
 <a id='intro'></a>
@@ -1270,7 +1270,7 @@ plot(alcoholism_ratio_index,alcoholism_ratio_values,ylabel,xlabel,title)
 #### Discussion
 Unlike previous results, it is evident that late adults and middle-aged adults with alcohol problems attend appointments the most, followed by senior citizens, with children attending appointments the least. Thus, if a patient is a late adult or middle-aged adult with alcohol problems, they are most likely to attend appointments.
 
-<a id='conclusions'></a>
+<a id='Report'></a>
 ## Report
 
 ***Introduction***
