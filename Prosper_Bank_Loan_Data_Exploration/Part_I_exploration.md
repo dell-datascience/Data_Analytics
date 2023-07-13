@@ -23,48 +23,45 @@ Are there differences between loans depending on how large the original loan amo
 
 ## Data description
 
-The dataset containing 113,937 loans with 81 features on each loan.
-Due to the large set of features, this analysis won't analyse each but will focus on these:
-- `ListingCategory`: This is a categorical variable that represents the loan's category or purpose, e.g. debt consolidation, home improvement, business, etc.
-- `LoanStatus`: the ratio of the borrower's debt to their income
-- `BorrowerAPR`: the annual percentage rate charged to the borrower
-- `LoanOriginalAmount`: the original amount of the loan
-- `BorrowerRate`: The interest rate that the borrower is paying on the loan.
-- `LoanMonthsSinceOrigination`: The number of months that have passed since the loan was originated.
-- `CreditScoreRangeLower`: The lower limit of the range in which the borrower's credit score falls.
-- `CreditScoreRangeUpper`:The upper limit of the range in which the borrower's credit score falls.
-- `StatedMonthlyIncome`: the amount of monthly income stated by the borrower
-- `DebtToIncomeRatio`: the ratio of the borrower's debt to their income
-- `EmploymentDuration`: the length of time the borrower has been employed in their current job.
-- `Employment`: indicates if a loan is current, completed, or in default.
-- `Occupation`: the borrower's occupation
-- `IsBorrowerHomeowner`: indicates if the borrower owns a home
-- `InquiriesLast6Months`: the number of credit inquiries made on the borrower in the last 6 months.
-- `PublicRecordsLast12Months`: the number of public records in the borrower's credit history in the last 12 months.
-- `DelinquenciesLast7Years`: Refers to the number of times the borrower has been delinquent on a payment in the last 7 years
-- `CurrentCreditLines`: Represents the number of credit lines (e.g. credit cards, loans, etc.) currently open and being used by the borrower.
-- `RevolvingCreditBalance`: Refers to the current outstanding balance on all revolving credit accounts, such as credit cards, that the borrower has
-- `BankcardUtilization`: the ratio of the borrower's credit card balance to their credit limit
-- `LoanCurrentDaysDelinquent`
-- `TotalTrades`: the total number of trades in the borrower's credit history
-- `CurrentDelinquencies`: the number of current delinquencies on the borrower's credit record
+The dataset contains 113,937 loans with 81 features on each loan.
+Due to the large set of features, this analysis won't analyze each but will focus on these:
+```
+ListingCategory:            This is a categorical variable that represents the loan's category or purpose, e.g. debt consolidation, home improvement, business, etc.
+LoanStatus:                 The ratio of the borrower's debt to their income
+BorrowerAPR:                The annual percentage rate charged to the borrower
+LoanOriginalAmount:         The original amount of the loan
+BorrowerRate:               The interest rate that the borrower is paying on the loan.
+LoanMonthsSinceOrigination: The number of months that have passed since the loan originated.
+CreditScoreRangeLower:      The lower limit of the range in which the borrower's credit score falls.
+CreditScoreRangeUpper:      The upper limit of the range in which the borrower's credit score falls.
+StatedMonthlyIncome:        The amount of monthly income stated by the borrower
+DebtToIncomeRatio:          The ratio of the borrower's debt to their income
+EmploymentDuration:         The length of time the borrower has been employed in their current job.
+Employment:                 Indicates if a loan is current, completed, or in default.
+Occupation:                 The borrower's occupation
+IsBorrowerHomeowner:        Indicates if the borrower owns a home
+InquiriesLast6Months:       The number of credit inquiries made on the borrower in the last 6 months.
+PublicRecordsLast12Months:  The number of public records in the borrower's credit history in the last 12 months.
+DelinquenciesLast7Years:    Refers to the number of times the borrower has been delinquent on a payment in the last 7 years
+CurrentCreditLines:         Represents the number of credit lines (e.g. credit cards, loans, etc.) currently open and being used by the borrower.
+RevolvingCreditBalance:     Refers to the current outstanding balance on all revolving credit accounts, such as credit cards, that the borrower has
+BankcardUtilization:        The ratio of the borrower's credit card balance to their credit limit
+LoanCurrentDaysDelinquent
+    TotalTrades: the total number of trades in the borrower's credit history
+    CurrentDelinquencies: the number of current delinquencies on the borrower's credit record
+    TotalInquiries: The total number of credit inquiries made on the borrower's credit file in the past 6 months
+```
 
-- `TotalInquiries`: The total number of credit inquiries made on the borrower's credit file in the past 6 months
+### Feature(s) selection
 
+Since the investigation is focused on the `loan outcome` the strongest features are the ones that provide some kind of assurance to the lender about the borrowers' ability to pay back and the justification for taking the loan. These are:
 
-### What features in the dataset do you think will help support the investigation into your feature(s) of interest?
-
-Since the investigation is focused on the `loan outcome` the strongest features might be the ones that provide some kind of assurance to the lender about the borrowers ability to pay back and the justification for taking the loan. These are:
-
-`BorrowerAPR`,`CreditScoreRangeLower`, `CreditScoreRangeUpper`,
-`StatedMonthlyIncome`,`DebtToIncomeRatio`,`EmploymentDuration`,`Employment`,`Occupation`,`IsBorrowerHomeowner`,
+`BorrowerAPR`, `CreditScoreRangeLower`, `CreditScoreRangeUpper`,
+`StatedMonthlyIncome`, `DebtToIncomeRatio`, `EmploymentDuration`, `Employment`, `Occupation`, `IsBorrowerHomeowner`,
 `InquiriesLast6Months`, `PublicRecordsLast12Months`, `DelinquenciesLast7Years`,`ListingCategory`
-
-
 
 # Data Wrangling
 <a id="wrangling"></a>
-
 
 ```python
 # import all packages and set plots to be embedded inline
@@ -77,7 +74,6 @@ import requests
 pd.set_option('display.max_columns', 500)
 ```
 
-
 ```python
 # Loading the dataset
 # Get the URL of the dataset
@@ -86,15 +82,12 @@ url = 'https://s3.amazonaws.com/udacity-hosted-downloads/ud651/prosperLoanData.c
 loan_data = requests.get(url)
 # create file and write request content into file named loan_data.csv
 with open(url.split('/')[-1], mode='wb') as file:
-    file.write(loan_data.content)
-    
+    file.write(loan_data.content)    
 ```
-
 
 ```python
 loan_data = pd.read_csv('prosperLoanData.csv')
 ```
-
 
 ```python
 # check the number of entries and the features
@@ -103,9 +96,7 @@ print(loan_data.shape)
 
     (113937, 81)
 
-
 #### Remove columns not directly needed for analysis
-
 
 ```python
 drop =['ListingKey',
@@ -115,8 +106,7 @@ drop =['ListingKey',
 loan_data.drop(columns=drop,inplace=True)
 ```
 
-Rename list category from numeric to corresponding  string value and rename column name for context
-
+Rename the list category from numeric to a corresponding  string value and rename the column name for the context
 
 ```python
 # replace list category from numeric to corresponding 
@@ -148,8 +138,7 @@ loan_data.rename(columns={'ListingCategory (numeric)':'ListingCategory'},inplace
 
 ```
 
-summarise the various statges of Past Due (1-120days) into a single `Past Due` value for simplicity
-
+summarise the various stages of Past Due (1-120days) into a single `Past Due` value for simplicity
 
 ```python
 import re
@@ -162,64 +151,43 @@ for value in loan_data.LoanStatus:
 loan_data['loanstatus'] = loanstatus
 ```
 
-
 ```python
 loan_data['loanstatus'].unique()
 ```
 
-
-
-
     array(['Completed', 'Current', 'Past Due ', 'Defaulted', 'Chargedoff',
            'Cancelled', 'FinalPaymentInProgress'], dtype=object)
-
-
-
 
 ```python
 # check for duplicates
 loan_data.duplicated().sum()
 ```
 
-
-
-
     0
-
-
-
 
 ```python
 # a detialed check on missing entries
 missing_stats = loan_data.isnull().sum()
 missing_value_count = missing_stats[missing_stats>0].count()
-print('There are {} columns with one or more missing values. However there are no duplicated entries'\
+print('There are {} columns with one or more missing values. However, there are no duplicated entries'\
       .format(missing_value_count))
 
 ```
 
-    There are 42 columns with one or more missing values. However there are no duplicated entries
-
-
+    There are 42 columns with one or more missing values. However, there are no duplicated entries
 
 ```python
 loan_data.shape
 ```
 
-
-
-
     (113937, 77)
-
-
 
 # Exploratory Data analysis
 <a id="EDA"></a>
 
 ## Univariate Exploration 
 
-> - 1. What is the loan status of borrowers in prosper bank?
-
+ 1. What is the loan status of borrowers in prosper bank?
 
 ```python
 order_type = loan_data.loanstatus.value_counts().index
@@ -233,7 +201,6 @@ def countplot(df,col,order_type):
     plt.xticks(rotation=75);
     
 ```
-
 
 ```python
 plt.figure(figsize=(14,6))
@@ -271,21 +238,16 @@ plt.subplot(1,2,1)
 countplot(loan_data,'loanstatus',order_type)
 plt.title('Distribution of loanstatus of borrowers');
 ```
-
-
-    
+ 
 ![png](Part_I_exploration_files/Part_I_exploration_20_0.png)
     
+ The bar graph of loan status reveals that the majority of Prosper Bank's clients are in good standing and have either completely paid off their loans or are actively in the process of paying off while a small proportion of their borrowers are being charged off or defaulting, past due, canceled (not in good standing with the bank).
 
+To be specific, about a third of loans given out have been fully repaid (`complete`) with about half of all borrowers currently in the process of paying off loans(`current`). Only about one-tenth of loans have been `charged-off`, leaving only about 4.4% `defaulted` and 1.8% of loans in various stages of being defaulted by 1 to 120 days `past due`.
 
- The bar graph of loan status reveal that the majority of Prosper bank's client are in good standing and have either completely paid off their loans or are actively in the process of paying off while a small proportion of their borrowers are being chargedoff or defaulting, past due, cancelled (not in good standing with bank).
+Therefore, Prosper's bank is actually prospering. A deeper investigation to find the dollar value of these loan statuses will continue to ascertain the average amount of loans being paid off, whether they are mostly small loans or big loans.
 
-To be specific, about a third of loans given out have been fully repaid (`complete`) with about half of all borrowers currently in the process of paying off loans(`current`).Only about one-tenth of loans have been `chargedoff`, leaving only about 4.4% `defaulted` and 1.8% of loans in various stages of being defaulted by 1 to 120 days `past due`.
-
-Therefore, Prosper's bank is actually prospering. A deeper investigation to find the dollar value of these loan status will continue to assertain the average amount of loans being paid off, whether they are mostly small loans or big loans.
-
-> - 2. For the borrowers in good standing (current) and those not in good standing (cancelled), what are their reasons for taking loans?
-
+2. For the borrowers in good standing (current) and those not in good standing (canceled), what are their reasons for taking loans?
 
 ```python
 plt.figure(figsize=(16,9))
@@ -307,14 +269,9 @@ plt.title('Listing category for current borrowers (top 5)');
 plt.tight_layout(pad=5)
 
 ```
-
-
     
 ![png](Part_I_exploration_files/Part_I_exploration_23_0.png)
     
-
-
-
 ```python
 
 plt.figure(figsize=(14,9))
@@ -335,15 +292,11 @@ plt.tight_layout(pad=5)
 
 ```
 
-
-    
 ![png](Part_I_exploration_files/Part_I_exploration_24_0.png)
     
-
-
   For current borrowers, the most frequent reasons why they are taking loans are (in descending order) : 
 
-- `Debt consolidation` > `undefined` > `home investment` > `business` > `household expensis` 
+- `Debt consolidation` > `undefined` > `home investment` > `business` > `household expenses 
 
 Whilst for defaulting borrowers, they are (in descending order) : 
 
@@ -356,12 +309,10 @@ whilst a reason found in only defaulting borrowers is `personal loan`
 
 Therefore, borrowers who take personal loans are more likely to default. This may be because they quickly spend it without really thinking about repayment.
 
-`NB`: Debt consolidation is the process of combining multiple debts into a single, lower interest loan to simplify and potentially reduce the overall cost of repaying debt. This is typically achieved by taking out a new loan to pay off existing debts, resulting in a single monthly payment to the new lender.
+`NB`: Debt consolidation is the process of combining multiple debts into a single, lower-interest loan to simplify and potentially reduce the overall cost of repaying debt. This is typically achieved by taking out a new loan to pay off existing debts, resulting in a single monthly payment to the new lender.
 
-
-> - 3. What is the distribution of the BorrowerAPR, which is the annual interest rate that the borrower is paying? 
+3. What is the distribution of the BorrowerAPR, which is the annual interest rate that the borrower is paying? 
 what is the most frequent APR and why? 
-
 
 ```python
 # order_type = loan_data.BorrowerAPR.value_counts().index
@@ -376,12 +327,10 @@ def histplot(data, focus, bins=None):
 
 ```
 
-
 ```python
-# the BorrowerAPR is multiplied by 100 to express it in  perentage
+# the BorrowerAPR is multiplied by 100 to express it in  percentage
 loan_data['BorrowerAPR%'] = loan_data['BorrowerAPR']*100.0
 ```
-
 
 ```python
 bins =np.arange(0,loan_data['BorrowerAPR%'].max()+0.5,1)
@@ -393,16 +342,12 @@ plt.xlabel('BorrowerAPR');
 plt.ylabel('Frequency');
 plt.title('Distribution of BorrowerAPR');
 ```
-
-
     
 ![png](Part_I_exploration_files/Part_I_exploration_29_0.png)
     
+Small bin sizes reveal that there are interest rates peaks at 9%,19%, 29%, and 35%. It is interesting to see that a BorrowerAPR of 35% is the most frequent. These interest rates may represent standard interest rates on loans, with 35% APR being the most frequent. These APRs may depend on certain criteria such as risk. In the next section, I would investigate the relationship between `loan status` and `borrowerAPR`. to see if the interest rates affect the status of the loans.
 
-
-Small bin sizes reveal that there are interest rates peaks at 9%,19%, 29% and 35%. It is interesting to see that BorrowerAPR of 35% is the most frequent. These interest rate may represent standard interest rates on loans, with 35% APR being the most frequent. These APR may depend on certain criteria such as risk. In the next section I would investigate the relation ship between `loan status` and `borrowerAPR`. to see if the interest rates affect the status of the loans.
-
-> - 4. Between the group of home owners and non-home owners, which group dominates in borrowing?
+4. Between the group of homeowners and non-homeowners, which group dominates in borrowing?
 Does the bank have a preference among these groups?
 
 
@@ -411,16 +356,12 @@ plt.figure(figsize=(8,5))
 countplot(loan_data,'IsBorrowerHomeowner',order_type=None)
 
 ```
-
-
     
 ![png](Part_I_exploration_files/Part_I_exploration_32_0.png)
     
+Judging from the chart, these groups borrow at almost the same frequency. Therefore Prosper Bank doesn't discriminate between homeowners and non-homeowners when it comes to lending.
 
-
-Judging from the chart, these groups borrow at almost the same frequency. Therefore Prosper bank doesn't discriminate between home owners and non-homeowners when it comes to lending.
-
-> - 5. What do these borrowers do for a living?.
+> - 5. What do these borrowers do for a living?
 They must have some means of paying back the loan.
 
 
@@ -700,19 +641,6 @@ loan_amt.set_index('loanstatus')
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -775,14 +703,14 @@ plt.xticks(rotation=90);
     
 
 
-#### Looking at the loan originally amount borrowed by borrowers, borrowers who borrowed the most  are those consistently rapaying (`curent`) and those making their last payment(` finalpaymentprogress` at `$10360` and `$8346` respectively.
+#### Looking at the loan original amount borrowed by borrowers, borrowers who borrowed the most  are those consistently repaying (`current) and those making their last payment(` finalpaymentprogress` at `$10360` and `$8346` respectively.
 
 Borrowers who have fully paid off their loans (`completed`) borrowed an average of `$6189.` 
 
-Borrowers who had their loans cancelled borrowed an average of `$1700` which the lowest of all amount borrowed. It can be suggested that their loans were cancelled and forgiven because the amount borrowed was small and it might cost more to retreive those loans from borrowers.
+Borrowers who had their loans canceled borrowed an average of `$1700` which is the lowest of all amount borrowed. It can be suggested that their loans were canceled and forgiven because the amount borrowed was small and it might cost more to receive those loans from borrowers.
 
 
->What is the annual interest rates of these borrower groups? Does their credit score play a role in these rates? Does the rates affect their rapayment?
+>What are the annual interest rates of these borrower groups? Does their credit score play a role in these rates? Do the rates affect their repayment?
 
 
 ```python
@@ -824,76 +752,60 @@ plt.tight_layout(pad=1)
 
 
 ```
-
-
     
-![png](Part_I_exploration_files/Part_I_exploration_69_0.png)
-    
-
-
+![png](Part_I_exploration_files/Part_I_exploration_69_0.png)    
 
 ```python
 plt.figure(figsize=(17,10))
 lists = ['BorrowerAPR%','CreditScoreRangeLower']
 plt.subplot(2,2,3)
 heatmap(lists)
-
 ```
 
-
-    
 ![png](Part_I_exploration_files/Part_I_exploration_70_0.png)
     
+With investigation, it looks like, with the exception of defaulted borrowers, the borrowers with the lowest `BorrowerAPR%` are the ones currently paying their loan on schedule, completing their loan payment, and those making their final payment. 
 
+Borrowers who have past Due dates on their loans, defaulted, or have been charged off  are the ones with higher `borrowersAPR%`. 
 
-With investigation, it looks like, with the exception of defaulted borrowers, the borrowers with the lowest `BorrowerAPR%` are the ones currenlty paying their loan on schedule, completed their loan payment, and those making their final payment. 
+Interestingly, the borrowers who have had their loan canceled have the lowest `BorrowerAPR%` and yet they couldn't pay their loans. This is not surprising because as seen from the previous plot, they have the lowest reported income and were lent the lowest amount amongst the categories.
 
-Borrowers who have past Due dates on their loans, defaluted, or have been charged off  are the ones with higher `borrowersAPR%` . 
+Additionally, for the bar chart at the upper right, (loan status vs credit score), with the exception of Past Due borrowers, borrowers with the highest credit score are those currently paying their loans, those who completed the payment, and those making their final payment progress. Those who defaulted or had their loans canceled have the lowest average credit score. 
+Borrowers with the smaller BorrowerAPR% are in good standing with the bank compared to  those who have defaulted and are past due date as they have higher borrowerAPR%.
 
-Interestingly,the borrowers who have had their loan cancelled have the lowest `BorrowerAPR%` and yet they couldn't pay their loaons. This is not surprising because as seen from previous plot, they have the lowest reported income and were lended the lowest amount amongst the categories.
-
-Additionally, for the barchat at the upper right, (loanstatus vrs credit score), with the exception of Past Due borrowers, borrowers with the highest credit score are thosecurrently paying their loans, those who completed payment and those making their final payment progress. Those who defaulted or had their loans cencelled have lowest average credit score. 
-Borrowers with the smaller BorrowerAPR% are in good standing with the bank compared to  those who have defaulyed and past due date as they have higher borrowerAPR%.
-
-This relationship is further exposed in the heatmap, as credit score an BorrowerAPR% are related with slight negetively correlation.  Thus an increase in one variable causes a slight decrease in the other (inversely related).  
+This relationship is further exposed in the heatmap, as credit score and BorrowerAPR% are related with a slight negative correlation.  Thus an increase in one variable causes a slight decrease in the other (inversely related).  
 
 >Also does credit score influence how much loan they get?
-
 
 ```python
 plt.figure(figsize=(12,9))
 regplot('CreditScoreRangeLower','LoanOriginalAmount');
-
 ```
 
-
-    
 ![png](Part_I_exploration_files/Part_I_exploration_73_0.png)
     
-
-
-The increasing regresssionn line and scatter plot indicate that increasing credit score also increases loan original amount given to borrower. Therefore borrowers with the lowest credit score, also have the higher borrowerAPR%, earn the lower and struggle to repay their loans compared to those with higher credit score.  
+The increasing regression line and scatter plot indicate that an increasing credit score also increases the original loan amount given to the borrower. Therefore, borrowers with the lowest credit score, also have a higher borrower APR%, earn less, and struggle to repay their loans compared to those with higher credit scores.
 
 ### Talk about some of the relationships you observed in this part of the investigation. How did the feature(s) of interest vary with other features in the dataset?
 
-1. Interestingly there are more borrowers who have had their loans charged off or defaulted who are not home owners than those who are home owners. And there are more borrowers who are currenlty in the process of paying back their loans who are home owners than those who are not. This could due to borrowers using their homes for collatoral and not wanting to lose their home, thus giving some incentive to rapay loans on schedule.
-2. Investigating borrowers loan status against their amount borrowed indicate that borrowers who had their loans cancelled borrowed the least amount on average whilst those who are currently repaying their loans (including those making their final payment) borrowed the most. Their loans were forgiven probably because it was the least and might cost more to recover. 
-3. Similarly, investigating borrowers loan status against their monthly income reveal that those making their final payment, currently paying their loans,and those who have completed their loan repayment earn highier on average compared to those who defaulted, were chargedoff or had thier loans cancelled. Borrowers who are late on their due date payments also earn higher.
-4. High borrowerAPR might slow loan repayment, with the exception of defaulted borrowers, the borrowers with the lowest `BorrowerAPR%` are currenlty paying their loan on schedule, have completed their loan payment, or are making their final payment. While those with the highest `borrowersAPR%` are the ones who have past Due dates on their loans, defaluted, or have been charged off. Interestingly,the borrowers who have had their loan cancelled have the lowest `BorrowerAPR%` and yet they couldn't pay their loaons. This is not surprising because as seen from previous plot, they have the lowest reported income and were lended the lowest amount amongst the categories.
-5. Additionally, a high credit score might indicate a higher a borrowers ability to repay loan as 
-6. Borrowers with the smaller BorrowerAPR% are in good standing with the bank (currenlty paying their loan on schedule, have completed their loan payment, or are making their final payment) compared to those who have defaulyed and past due date as they have higher borrowerAPR%.
+1. Interestingly, there are more borrowers who have had their loans charged off or defaulted who are not homeowners than those who are homeowners. And there are more borrowers who are currently in the process of paying back their loans who are homeowners than those who are not. This could be due to borrowers using their homes for collateral and not wanting to lose their homes, thus giving some incentive to repay loans on schedule.
+2. Investigating borrower's loan status against the amount borrowed indicates that borrowers who had their loans canceled borrowed the least amount on average whilst those who are currently repaying their loans (including those making their final payment) borrowed the most. Their loans were forgiven probably because it was the least and might cost more to recover. 
+3. Similarly, investigating borrowers' loan status against their monthly income reveal that those making their final payment, currently paying their loans, and those who have completed their loan repayment earn higher on average compared to those who defaulted, were charged off, or had their loans canceled. Borrowers who are late on their due date payments also earn higher.
+4. High borrowerAPR might slow loan repayment, with the exception of defaulted borrowers, the borrowers with the lowest `BorrowerAPR%` are currently paying their loan on schedule, have completed their loan payment, or are making their final payment. While those with the highest `borrowersAPR%` are the ones who have past Due dates on their loans, defaulted, or have been charged off. Interestingly, the borrowers who have had their loan canceled have the lowest `BorrowerAPR%` and yet they couldn't pay their loans. This is not surprising because as seen from the previous plot, they have the lowest reported income and were lent the lowest amount amongst the categories.
+5. Additionally, a high credit score might indicate a higher borrower's ability to repay a loan.
+6. Borrowers with the smaller BorrowerAPR% are in good standing with the bank (currently paying their loan on schedule, have completed their loan payment, or are making their final payment) compared to those who have defaulted and past due date as they have higher borrowerAPR%.
 
 
 ### Did you observe any interesting relationships between the other features (not the main feature(s) of interest)?
 
-1. Credit score and BorrowerAPR% are inversely related with slight negetively correlation.  Thus an increase in one variable causes a slight decrease in the other.
-2. However, credit score is positively correlated with the amount of loans given, as increasing credit show increase in loan original amount given to borrower. Therefore borrowers with the lowest credit score, also have the higher borrowerAPR%, earn the lower and struggle to repay their loans compared to those with higher credit score.
-3. Additionally,loan original amount (amount of loan given to borrower) increases slightly with increasing stated monthly income as there exist a sligt positive correlation of 0.2 between these two features
+1. Credit score and BorrowerAPR% are inversely related with a slight negative correlation.  Thus an increase in one variable causes a slight decrease in the other.
+2. However, a credit score is positively correlated with the number of loans given, as increasing credit show an increase in the loan original amount given to the borrower. Therefore borrowers with the lowest credit score, also have the higher borrowerAPR%, earn the lower and struggle to repay their loans compared to those with higher credit scores.
+3. Additionally, the loan original amount (amount of loan given to borrower) increases slightly with increasing stated monthly income as there exists a slight positive correlation of 0.2 between these two features
 
 ## Multivariate Exploration
 
 
->- 1. Of all the groups of borrowers, what are their mean monthly income and how much money are they borrowing ? 
+>- 1. Of all the groups of borrowers, what are their mean monthly income and how much money are they borrowing? 
 
 
 ```python
@@ -902,7 +814,6 @@ loan_stat_income = loan_data.groupby(by='loanstatus')['StatedMonthlyIncome']\
 # loan_stat_income
 ```
 
-
 ```python
 loan_stat_amount = loan_data.groupby(by='loanstatus')['LoanOriginalAmount']\
         .mean().sort_values(ascending=False).reset_index()
@@ -910,23 +821,7 @@ merged = loan_stat_amount.merge(loan_stat_income,left_on='loanstatus',right_on='
 merged.sort_values(by='StatedMonthlyIncome',ascending=False)
 ```
 
-
-
-
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -983,9 +878,6 @@ merged.sort_values(by='StatedMonthlyIncome',ascending=False)
 </table>
 </div>
 
-
-
-
 ```python
 order = merged.loanstatus
 plt.figure(figsize=(9,14))
@@ -1003,19 +895,14 @@ plt.legend(loc = 6,
 
 ```
 
-
-    
 ![png](Part_I_exploration_files/Part_I_exploration_80_0.png)
     
+Of all the groups of borrowers, those in good standing with the bank have a higher monthly income than those who are not and ended up borrowing more than those who are not in good standing. 
+Borrowers in good standing: current, completed, and  those making their last payment(final payment progress) earn `$6311.738`, `$5324.522`, and `$6153.262` respectively.
 
+However, borrowers who had their loans canceled earned the least average income of `$2608.933`
 
-Of all the groups of borrowers, those in good standing with the bank have the higher montly income than those who are not and ended up borrowing more that those who are not ingood standing. 
-Borrowers in good standnig: curent, completed and  those making their last payment(finalpaymentprogress) earn `$6311.738` , `$5324.522` and `$6153.262` respectively.
-
-However, borrowers who had their loans cancelled earned the least average income of `$2608.933`
-
-Therefore there is a realtionship between the LoanOriginalAmount (amount borrowed), StatedMonthlyIncome and loan status.
-
+Therefore there is a relationship between the LoanOriginalAmount (the amount borrowed), StatedMonthlyIncome, and loan status.
 
 ```python
 loan_credit = loan_data.groupby('loanstatus')['CreditScoreRangeLower']\
@@ -1042,21 +929,15 @@ plt.legend(loc = 6,
            title='CreditScoreRangeLower'); 
 
 ```
-
-
     
-![png](Part_I_exploration_files/Part_I_exploration_83_0.png)
-    
+![png](Part_I_exploration_files/Part_I_exploration_83_0.png)    
 
-
-> - 2. Acrros all the employment status of borrowers, do those who cuurently pay their loans or on their final payment earn more than those who default or get their loan cancelled?
+> - 2. Across all the employment statuses of borrowers, do those who currently pay their loans or are on their final payment earn more than those who default or get their loans canceled?
 
 
 ```python
 loan_data_sub = loan_data.query("loanstatus in ['Current','Defaulted','Cancelled','FinalPaymentInProgress']") 
-
 ```
-
 
 ```python
 plt.figure(figsize=(12,9))
@@ -1065,22 +946,14 @@ sb.pointplot(data = loan_data_sub, x = 'EmploymentStatus', \
              linestyles = "",dodge=True)
 plt.legend(loc = 6, bbox_to_anchor = (1.0, 0.5)) # legend to right of figure
 plt.xticks(rotation = 90);
-
 ```
-
-
     
 ![png](Part_I_exploration_files/Part_I_exploration_86_0.png)
     
-
-
-Looking at the income and their employment status of borrowers in the current, defaulted, cancelled and finalpayment process, it is evident that borrowers who are currently paying off debth and those making their final payments have higher incomce across several emplyment fields than those who have had their loans cancelled or defaulted.
+Looking at the income and employment status of borrowers in the current, defaulted, canceled, and final payment process, it is evident that borrowers who are currently paying off debt and those making their final payments have higher incomes across several employment fields than those who have had their loans canceled or defaulted.
 Borrowers who are not employed have the lowest income with those  both defaulters and those currently paying loans having about the same income.
 
-
-
-> - 3. Across all the employment status of borrowers, do those who default on loans have a higher dept to income ration than those currently paying their loans or those making their final payment?
-
+> - 3. Across all the employment statuses of borrowers, do those who default on loans have a higher debt to income ratio than those currently paying their loans or those making their final payment?
 
 ```python
 plt.figure(figsize=(12,9))
@@ -1089,18 +962,13 @@ sb.barplot(data = loan_data_sub, x = 'EmploymentStatus', \
 plt.legend(loc = 6, bbox_to_anchor = (1.0, 0.5)) # legend to right of figure
 plt.xticks(rotation = 90);
 ```
-
-
     
 ![png](Part_I_exploration_files/Part_I_exploration_89_0.png)
     
+In addition, borrowers who are not employed tend to have the highest debt-to-income ratio and mostly default on loans.
+This is followed by borrowers who are self-employed, as they have the second highest debt-to-income ratio and the proportion of these borrowers who default on their loans is more than those who currently pay their loans on schedule.
 
-
-In addition, borrowers who are not employed thend to have the highest debt to income ratio and mostly defalut on loans.
-This is followed by borrowers who are self emplyed, as they have the second highest debt to income ratio and the proportion of these borrowers whi default on their loans are more than those who currently pay their loans on schedule.
-
-> - 4. Are there any noticeable correlation among the features studies so far?
-
+> - 4. Is there any noticeable correlation among the feature studies so far?
 
 ```python
 plt.figure(figsize=(12,9))
@@ -1112,14 +980,10 @@ interest = ['LoanOriginalAmount','StatedMonthlyIncome'
 heatmap(interest)
 ```
 
-
-    
 ![png](Part_I_exploration_files/Part_I_exploration_92_0.png)
     
-
-
-There is a weak negative corelation between original loan amount and borrowerAPR%, thus these are inversely related.
-There is also a weak positive correlation between loan original amount and credit score range upper.
+There is a weak negative correlation between the original loan amount and borrowerAPR%, thus these are inversely related.
+There is also a weak positive correlation between the loan original amount and credit score range upper.
 There is a weak correlation between ishomeowner and loanoroginalamount.
 There is a weak correlation between statedMonthlyincome and LoanOriginalAmount
 there is also a weak correlation between ishomeowner and credit score.
@@ -1127,34 +991,19 @@ there is also a weak correlation between ishomeowner and employmentstatusduratio
 
 ### Talk about some of the relationships you observed in this part of the investigation. Were there features that strengthened each other in terms of looking at your feature(s) of interest?
 
-Looking at the income and their employment status of borrowers in the current, defaulted, cancelled and finalpayment process, it is evident that borrowers who are currently paying off debth and those making their final payments have higher incomce across several emplyment fields than those who have had their loans cancelled or defaulted. Borrowers who are not employed have the lowest income with those both defaulters and those currently paying loans having about the same income.
+Looking at the income and employment status of borrowers in the current, defaulted, canceled, and final payment process, it is evident that borrowers who are currently paying off debt and those making their final payments have higher income across several employment fields than those who have had their loans canceled or defaulted. Borrowers who are not employed have the lowest income with those both defaulters and those currently paying loans having about the same income.
 
-In addition, borrowers who are not employed thend to have the highest debt to income ratio and mostly defalut on loans.
-This is followed by borrowers who are self emplyed, as they have the second highest debt to income ratio and the proportion of these borrowers whi default on their loans are more than those who currently pay their loans on schedule.
+In addition, borrowers who are not employed tend to have the highest debt-to-income ratio and mostly default on loans.
+This is followed by borrowers who are self-employed, as they have the second highest debt-to-income ratio and the proportion of these borrowers who default on their loans is more than those who currently pay their loans on schedule.
 
 ### Were there any interesting or surprising interactions between features?
 
-Borrowers who default on their loans are generally have lower credit scores than those who currently pay their loans on schedule.
-one would think that having a low credit score should rather motivate these borrowers to make due on their commitment on paying their loans.
+Borrowers who default on their loans generally have lower credit scores than those who currently pay their loans on schedule.
+one would think that having a low credit score should rather motivate these borrowers to make due on their commitment to paying their loans.
 
 ## Conclusions
 <a id="conclusions"></a>
-The majority of borrowers have some form of employment, with 60.3% having employment and the most frequent salary range being $2,500 to $5,500. Most of these borrowers have a good standing with the bank, as they have a means of paying back the loan and a debt to loan ratio of only 0.2. The biggest borrowers are also the most compliant, with good standing borrowers having a lower borrower APR and higher income than those not in good standing with the bank. The inverse relationship between credit score range lower and borrower APR shows that borrowers with low credit scores have a higher borrower APR and are lent lesser money. Across all employment fields, non-employed, self-employed, and retired borrowers have a higher debt to income ratio and default the most on their loans. The data shows a weak negative correlation between original loan amount and borrower APR, and a weak positive correlation between loan original amount, credit score range upper, homeowner status, and stated monthly income.
+The majority of borrowers have some form of employment, with 60.3% having employment and the most frequent salary range being $2,500 to $5,500. Most of these borrowers have a good standing with the bank, as they have a means of paying back the loan and a debt-to-loan ratio of only 0.2. The biggest borrowers are also the most compliant, with good-standing borrowers having a lower borrower APR and higher income than those not in good standing with the bank. The inverse relationship between credit score range lower and borrower APR shows that borrowers with low credit scores have a higher borrower APR and are lent lesser money. Across all employment fields, non-employed, self-employed, and retired borrowers have a higher debt-to-income ratio and default the most on their loans. The data shows a weak negative correlation between the original loan amount and borrower APR, and a weak positive correlation between the loan original amount, credit score range upper, homeowner status, and stated monthly income.
 
 #### Call to action 
-Based on the insights and findings from the loan data analysis, it is clear that the employment status, credit score, income and homeowner status play a significant role in determining the loan amount, borrower APR, loan standing and likelihood of default. Given this information, it would be wise for lenders to consider these factors when evaluating loan applications. Additionally, borrowers can take steps to improve their credit score, increase their income and consider homeownership as a way to increase their chances of getting approved for a loan with better terms and conditions. By being proactive in improving these factors, both borrowers and lenders can benefit from better loan outcomes.
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
+Based on the insights and findings from the loan data analysis, it is clear that employment status, credit score, income, and homeowner status play a significant role in determining the loan amount, borrower APR, loan standing, and the likelihood of default. Given this information, it would be wise for lenders to consider these factors when evaluating loan applications. Additionally, borrowers can take steps to improve their credit score, increase their income and consider homeownership as a way to increase their chances of getting approved for a loan with better terms and conditions. By being proactive in improving these factors, both borrowers and lenders can benefit from better loan outcomes.
