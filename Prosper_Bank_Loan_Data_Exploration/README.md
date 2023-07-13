@@ -10,23 +10,24 @@ This project explores a dataset containing 113,937 loans with 81 variables on ea
 The data can be found here: 'https://s3.amazonaws.com/udacity-hosted-downloads/ud651/prosperLoanData.csv'
  
 The main interest of this project is to study the borrowers of prosper bank, especially their loan status along with other features to understand what factors affect a loan status of a borrower.Due to the large set of features, this analysis won't analyse each but will focus on these:
-- ListingCategory: This is a categorical variable that represents the loan's category or purpose, e.g. debt consolidation, home improvement, business, etc.
-- LoanStatus: the ratio of the borrower's debt to their income
-- BorrowerAPR: the annual percentage rate charged to the borrower
-- LoanOriginalAmount: the original amount of the loan
-- BorrowerRate: The interest rate that the borrower is paying on the loan.
-- CreditScoreRangeLower: The lower limit of the range in which the borrower's credit score falls.
-- CreditScoreRangeUpper:The upper limit of the range in which the borrower's credit score falls.
-- StatedMonthlyIncome: the amount of monthly income stated by the borrower
-- DebtToIncomeRatio: the ratio of the borrower's debt to their income
-- EmploymentDuration: the length of time the borrower has been employed in their current job.
-- Employment: indicates if a loan is current, completed, or in default.
-- Occupation: the borrower's occupation
-- IsBorrowerHomeowner: indicates if the borrower owns a home
-- InquiriesLast6Months: the number of credit inquiries made on the borrower in the last 6 months.
-- PublicRecordsLast12Months: the number of public records in the borrower's credit history in the last 12 months.
-- DelinquenciesLast7Years: Refers to the number of times the borrower has been delinquent on a payment in the last 7 years
-
+```
+ListingCategory: This is a categorical variable that represents the loan's category or purpose, e.g. debt consolidation, home improvement, business, etc.
+LoanStatus: the ratio of the borrower's debt to their income
+BorrowerAPR: the annual percentage rate charged to the borrower
+LoanOriginalAmount: the original amount of the loan
+BorrowerRate: The interest rate that the borrower is paying on the loan.
+CreditScoreRangeLower: The lower limit of the range in which the borrower's credit score falls.
+CreditScoreRangeUpper:The upper limit of the range in which the borrower's credit score falls.
+StatedMonthlyIncome: the amount of monthly income stated by the borrower
+DebtToIncomeRatio: the ratio of the borrower's debt to their income
+EmploymentDuration: the length of time the borrower has been employed in their current job.
+Employment: indicates if a loan is current, completed, or in default.
+Occupation: the borrower's occupation
+IsBorrowerHomeowner: indicates if the borrower owns a home
+InquiriesLast6Months: the number of credit inquiries made on the borrower in the last 6 months.
+PublicRecordsLast12Months: the number of public records in the borrower's credit history in the last 12 months.
+DelinquenciesLast7Years: Refers to the number of times the borrower has been delinquent on a payment in the last 7 years
+```
 ### Data wrangling
 - Remove columns not directly needed for analysis.
 - Rename list category from numeric to corresponding string value and rename column name for context.
