@@ -15,8 +15,6 @@ This repository holds the below projects.
 
 [5. WeRateDogs Twitter Analysis](https://github.com/dell-datascience/Data_Analytics/tree/main/WeRateDogs_twitter_analysis)
 
-[6. Predicting Property Maintenance Fines](https://github.com/dell-datascience/Data_Analytics/tree/main/Predicting-Property-Maintenance-Fines)
-
-[7. University Town Price Analysis](https://github.com/dell-datascience/Data_Analytics/tree/main/University_town_Price_analysis_project)
+[6. University Town Price Analysis](https://github.com/dell-datascience/Data_Analytics/tree/main/University_town_Price_analysis_project)
 ___
 Each project has more detailed documentation that explains the summary and key takeaways of the project.
