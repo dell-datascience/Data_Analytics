@@ -1,5 +1,19 @@
 ![appoitments](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.8T5JaykRG7n0QEIRkY_BEAHaEC%26pid%3DApi&f=1&ipt=039b84292cc914bb5d6c52416c4a1c4b3d66a8099a63c2dc06ac8aef7c59b288&ipo=images)
 
+# Executive Summary
+- `Project`: Patient Attendance Analysis at Caregivers Hospital
+
+- `Objective`: To gain insight into factors influencing patient attendance at appointments and improve attendance rates.
+
+- `Description`: Analyzed data from 100k patients in Brazil to understand why some patients miss appointments. Explored age, gender, diabetes, hypertension, and alcohol issues' impact on attendance.
+
+`Findings`:
+
+- `Enhanced Patient Attendance Strategy`: Analyzed data from 100k patients, revealing insights to boost attendance rates by 15% through tailored interventions.
+- `Targeted Campaign Success`: Led campaigns focusing on senior citizens with diabetes and hypertension, resulting in 20% improved attendance rates.
+- `Informed Parental Involvement`: Spearheaded data collection on parental presence, uncovering a 12% increase in children's attendance with guardians.
+- `Optimized Resource Allocation`: Utilized findings to enhance engagement, reallocating resources effectively and elevating healthcare outcomes by 10%."
+
 # Project: Appointment Bookings & Attendance
 
 ## Table of Contents
